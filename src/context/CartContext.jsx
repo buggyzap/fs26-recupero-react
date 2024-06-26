@@ -15,11 +15,6 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
-  // Salva il carrello in localStorage ogni volta che cambia
-  useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
-
   // Aggiunge un prodotto al carrello
   const addToCart = (product) => {
     setCart((prevCart) => {
