@@ -1,4 +1,4 @@
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
@@ -14,9 +14,17 @@ export const AuthProvider = ({ children }) => {
     return email === "fr4.b4.og4@gmail.com" && password === "Fr4nc1oo";
   }
 
-  function userLogin(email, password) {
-    if (userExistance(email, password)) {
-      localStorage.setItem("user", JSON.stringify({ email, password }));
+  const userLogin = (email, password) => {
+    if (!userExistance(email, password)) {
+      return false;
     }
+    localStorage.setItem("user", JSON.stringify({ email }));
+    setUser({ email });
+    return true
   }
+  const userLogout = () => {
+    localStorage.removeItem("user")
+    setUser(null)
+  }
+  return <AuthContext.Provider value={{user, userLogin, userLogout}}>{children}</AuthContext.Provider>
 };
